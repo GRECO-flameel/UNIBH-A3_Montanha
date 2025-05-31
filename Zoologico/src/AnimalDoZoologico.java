@@ -54,11 +54,14 @@ public class AnimalDoZoologico {
 
     @Override
     public String toString() {
-        return id + ";" + nome + ";" + especie + ";" + idade + ";" + peso + ";" + habitat + ";" + emExtincao;
+        String statusExtincao = emExtincao ? "extinto" : "nao extinto";
+        return id + ";" + nome + ";" + especie + ";" + idade + ";" + peso + ";" + habitat + ";" + statusExtincao;
     }
 
     public static AnimalDoZoologico fromString(String linha) {
         String[] partes = linha.split(";");
+        if (partes[0].equalsIgnoreCase("id")) return null; // ignora cabecalho
+        boolean extincao = partes[6].equalsIgnoreCase("extinto");
         return new AnimalDoZoologico(
             Integer.parseInt(partes[0]),
             partes[1],
@@ -66,7 +69,7 @@ public class AnimalDoZoologico {
             Integer.parseInt(partes[3]),
             Double.parseDouble(partes[4]),
             partes[5],
-            Boolean.parseBoolean(partes[6])
+            extincao
         );
     }
 
