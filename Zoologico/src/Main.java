@@ -49,7 +49,8 @@ public class Main {
             System.out.print("Habitat: ");
             String habitat = scanner.nextLine();
             System.out.print("Em extincao (sim/nao): ");
-            boolean emExtincao = Boolean.parseBoolean(scanner.nextLine());
+            String resposta = scanner.nextLine().toLowerCase();
+            boolean emExtincao = resposta.equals("sim");
 
             AnimalDoZoologico animal = new AnimalDoZoologico(id, nome, especie, idade, peso, habitat, emExtincao);
             animal.validar();
@@ -65,6 +66,7 @@ public class Main {
         if (animais.isEmpty()) {
             System.out.println("Nenhum registro encontrado.");
         } else {
+            System.out.println("id;nome;especie;idade;peso;habitat;status");
             animais.forEach(System.out::println);
         }
     }
@@ -97,7 +99,8 @@ public class Main {
             System.out.print("Novo habitat: ");
             animal.setHabitat(scanner.nextLine());
             System.out.print("Em extincao (sim/nao): ");
-            animal.setEmExtincao(Boolean.parseBoolean(scanner.nextLine()));
+            String resposta = scanner.nextLine().toLowerCase();
+            animal.setEmExtincao(resposta.equals("sim"));
             animal.validar();
             salvarArquivo();
             System.out.println("Animal atualizado com sucesso!");
@@ -127,7 +130,8 @@ public class Main {
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                animais.add(AnimalDoZoologico.fromString(linha));
+                AnimalDoZoologico animal = AnimalDoZoologico.fromString(linha);
+                if (animal != null) animais.add(animal);
             }
         } catch (IOException e) {
             System.out.println("Arquivo nao encontrado, iniciando lista vazia.");
@@ -136,6 +140,8 @@ public class Main {
 
     private static void salvarArquivo() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
+            bw.write("id;nome;especie;idade;peso;habitat;status\n\n");
+            bw.newLine();
             for (AnimalDoZoologico animal : animais) {
                 bw.write(animal.toString());
                 bw.newLine();
