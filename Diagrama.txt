@@ -1,0 +1,36 @@
++----------------+
+|    Animal      |
++----------------+
+| - nome: String |
+| - especie: String |
+| - peso: double |
+| - idade: int   |
+| - emExtincao: boolean |
++----------------+
+| +Animal(nome, especie, peso, idade, emExtincao) |
+| +setEspecie(especie: String): void              |
+| +setPeso(peso: double): void                    |
+| +setIdade(idade: int): void                     |
+| +toString(): String                             |
++----------------+
+
+          ▲
+          |
+          | possui
+          |
++------------------+
+|   Zoologico      |
++------------------+
+| - animais: List<Animal> |
++------------------+
+| +Zoologico()              |
+| +adicionarAnimal(animal: Animal): void |
+| +listarAnimais(): void     |
+| +getAnimal(index: int): Animal |
++------------------+
+
++----------------+
+|     Main       |
++----------------+
+| +main(args: String[]): void |
++----------------+
